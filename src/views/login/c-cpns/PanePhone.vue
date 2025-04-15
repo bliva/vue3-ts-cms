@@ -13,7 +13,7 @@
 </template>
 
 <script setup name="PanePhone" lang="ts">
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 const loginForm = reactive({
 	account: '',
 	pwd: ''
