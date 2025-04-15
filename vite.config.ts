@@ -1,13 +1,13 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
+import eslint from 'vite-plugin-eslint'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
-
 import { viteMockServe } from 'vite-plugin-mock'
 // https://vite.dev/config/
 export default defineConfig({
@@ -41,6 +41,11 @@ export default defineConfig({
         setupProdMockServer();
       `,
 			logger: true // 是否显示请求日志
+		}),
+		eslint({
+			configType: 'flat',
+			fix: true,
+			include: ['src/**/*.{ts,tsx,vue}']
 		})
 	],
 	resolve: {

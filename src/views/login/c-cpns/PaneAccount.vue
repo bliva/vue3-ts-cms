@@ -44,7 +44,7 @@ const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = useLoginStore()
 // 登录
 function loginAction() {
-	formRef.value?.validate((valid, fields) => {
+	formRef.value?.validate(valid => {
 		if (valid) {
 			const name = loginForm.name
 			const password = loginForm.password
