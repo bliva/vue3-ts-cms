@@ -12,3 +12,5 @@ app.use(pinia)
 
 app.use(registerIcons)
 app.mount('#app')
+
+console.log('hello world')
