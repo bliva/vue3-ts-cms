@@ -14,3 +14,4 @@ app.use(registerIcons)
 app.mount('#app')
 
 console.log('hello world')
+console.log('1111 world')

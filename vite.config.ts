@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
-import eslint from 'vite-plugin-eslint'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -41,11 +40,6 @@ export default defineConfig({
         setupProdMockServer();
       `,
 			logger: true // 是否显示请求日志
-		}),
-		eslint({
-			configType: 'flat',
-			fix: true,
-			include: ['src/**/*.{ts,tsx,vue}']
 		})
 	],
 	resolve: {
