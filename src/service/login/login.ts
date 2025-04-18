@@ -7,3 +7,17 @@ export function accountLoginRequest(account: IAccount) {
 		data: account
 	})
 }
+
+export function getUserInfoById(id: string) {
+	return axsRequest.get({
+		url: '/users',
+		data: id
+	})
+}
+
+export function getRoleMenuById(id: string) {
+	return axsRequest.post({
+		url: '/menus',
+		data: id
+	})
+}

@@ -1,11 +1,17 @@
 import { BASE_URL, TIME_OUT } from './config'
 import AXSRequest from './request'
+import { storage } from '@/utils'
+import { LOGIN_TOKEN } from '@/global/constants'
 
 const axsRequest = new AXSRequest({
 	baseURL: BASE_URL,
 	timeout: TIME_OUT,
 	interceptors: {
 		requestInterceptor: config => {
+			const token = storage.get({ name: LOGIN_TOKEN }) || ''
+			if (token && config.headers) {
+				config.headers.Authorization = 'Bearer' + token
+			}
 			console.log('AXSRequest请求成功的拦截')
 			return config
 		},

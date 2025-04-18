@@ -26,11 +26,11 @@ class AXSRequest {
 		// 每一个实例都有自己的拦截器（给所有实例添加实例）
 		this.instance.interceptors.request.use(
 			config => {
-				console.log('所有实例都有的拦截器，请求成功')
+				// console.log('所有实例都有的拦截器，请求成功')
 				return config
 			},
 			err => {
-				console.log('所有实例都有的拦截器，请求失败')
+				// console.log('所有实例都有的拦截器，请求失败')
 				return err
 			}
 		)

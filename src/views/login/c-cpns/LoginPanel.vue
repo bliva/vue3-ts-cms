@@ -31,10 +31,19 @@
 </template>
 
 <script setup name="LoginPanel" lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import PaneAccount from './PaneAccount.vue'
 import PanePhone from './PanePhone.vue'
-const isRemPwd = ref(false)
+import { storage } from '@/utils'
+
+const isRemPwd = ref((storage.get({ name: 'isRemPwd' }) ?? '') as boolean)
+watch(isRemPwd, newVal => {
+	if (newVal) {
+		storage.set({ name: 'isRemPwd', content: newVal })
+	} else {
+		storage.remove({ name: 'isRemPwd' })
+	}
+})
 const activeName = ref('account')
 // typeof PaneAccount 拿到的是PaneAccount的实例对象，相当于是new PaneAccount, 所以InstanceType<typeof PaneAccount>拿到的就是PaneAccount
 const accountRef = ref<InstanceType<typeof PaneAccount>>()
@@ -42,7 +51,7 @@ const phoneRef = ref<InstanceType<typeof PanePhone>>()
 
 const loginClick = () => {
 	if (activeName.value === 'account') {
-		accountRef.value?.loginAction()
+		accountRef.value?.loginAction(isRemPwd.value)
 	} else {
 	}
 }

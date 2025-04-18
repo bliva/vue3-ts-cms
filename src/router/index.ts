@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
+import { storage } from '@/utils/storage'
+import { LOGIN_TOKEN } from '@/global/constants'
 const router = createRouter({
 	history: createWebHashHistory(),
 	routes: [
@@ -15,6 +16,10 @@ const router = createRouter({
 		{
 			path: '/main',
 			name: 'Main',
+			meta: {
+				title: '主页面',
+				auth: true // 当有这个字段的时候，我们就认为他这个路由页面是要有登录权限的
+			},
 			component: () => import('../views/main/Main.vue')
 		},
 		{
@@ -22,6 +27,27 @@ const router = createRouter({
 			component: () => import('../views/notFound/NotFound.vue')
 		}
 	]
+})
+
+// 路由守卫
+router.beforeEach((to, from) => {
+	const token = storage.get({ name: LOGIN_TOKEN }) || ''
+	console.log('token=====', token)
+
+	if (Object.is(to?.meta?.auth, false)) {
+	} else {
+		if (token) {
+			if (to.path === '/login' || (to.path !== '/main' && (from.path === '/' || from.path === '/login'))) {
+				return '/main'
+			} else {
+			}
+		} else {
+			if (to.path !== '/login') {
+				return '/login'
+			} else {
+			}
+		}
+	}
 })
 
 export default router

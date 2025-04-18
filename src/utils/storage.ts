@@ -1,5 +1,6 @@
 import type { IStorage, StorageValue, StorageContent, StorageItem, StorageEventDetail, IKey } from '@/types'
 import { validateNull } from '@/utils'
+import { ACCOUNT_INFO } from '@/global/constants'
 
 const keyName = `Fun-${import.meta.env.VITE_APP_NAME}-${import.meta.env.VITE_MODE_NAME}-`
 const commonKeyName = `Fun-${import.meta.env.VITE_MODE_NAME}-`
@@ -122,17 +123,19 @@ class Storage {
 	 * 清空存储
 	 * @param params 清空参数
 	 */
-	public clear(params: IStorage): void {
+	public clear(params: IStorage = { type: 'local' }): void {
 		const { type = 'local' } = params
 
 		if (type === 'session') {
 			sessionStorage.clear()
 		} else {
 			// 保留语言设置
-			const language = this.get({ commonKey: 'language' })
+			const language = this.get({ commonKey: 'language' }) || '中文'
+			const accountInfo = this.get({ name: ACCOUNT_INFO })
 			localStorage.clear()
 			if (language) {
 				this.set({ commonKey: 'language', content: language })
+				this.set({ name: ACCOUNT_INFO, content: accountInfo })
 			}
 		}
 	}
@@ -178,7 +181,6 @@ class Storage {
 
 	private initStorageListener(): void {
 		window.addEventListener('storage', (event: StorageEvent) => {
-			console.log('event====initStorageListener==', event)
 			if (event.key && this.listeners.has(event.key)) {
 				const callback = this.listeners.get(event.key)
 				if (callback) {

@@ -2,10 +2,18 @@
 <template>
 	<div id="Main">
 		<h2>Main</h2>
+		<button @click="handleExitClick">退出登录</button>
 	</div>
 </template>
 
-<script setup name="Main" lang="ts"></script>
+<script setup name="Main" lang="ts">
+import router from '@/router'
+import { storage } from '@/utils'
+function handleExitClick() {
+	storage.clear()
+	router.push('/login')
+}
+</script>
 
 <!--使用了scoped属性之后，父组件的style样式将不会渗透到子组件中，-->
 <style lang="less" scoped>
